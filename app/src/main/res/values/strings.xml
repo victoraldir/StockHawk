@@ -28,9 +28,15 @@
 
     <string name="error_no_network">No network connectivity! Will load stock cursor when the network is available.</string>
     <string name="error_no_stocks">No stocks added! Hit the floating action button to add one.</string>
-    <string name="error_no_stocks_available">No stocks available to %s! Check if you entered the correct Symbol.</string>
+    <string name="error_no_stocks_available">Stock quote %s does not exist!</string>
 
     <string name="toast_stock_added_no_connectivity">Symbol %s added. Will refresh when network available.</string>
     <string name="toast_no_connectivity">Will refresh when network available.</string>
+
+    <!-- Content description -->
+    <string name="btn_add_stock">Add new stock quote</string>
+    <string name="edt_add_stock">Add new stock quote</string>
+    <string name="title_activity_stock_detail">StockDetailActivity</string>
+    <string name="action_settings">Settings</string>
 
 </resources>
