@@ -9,18 +9,10 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical">
 
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="refresh"
-        android:id="@+id/btn_refresh"/>
-
-
-    <com.github.mikephil.charting.charts.LineChart
-        android:id="@+id/stock_chart"
+    <com.github.mikephil.charting.charts.BarChart
+        android:id="@+id/detail_bar_chart"
         android:layout_width="match_parent"
-        android:layout_height="180dp"
-        android:padding="16dp" />
+        android:layout_height="match_parent"
+        android:layout_above="@+id/seekBar1" />
 
     </LinearLayout>
