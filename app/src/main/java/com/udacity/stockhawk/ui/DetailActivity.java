@@ -2,18 +2,27 @@ package com.udacity.stockhawk.ui;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 
 import com.udacity.stockhawk.R;
 
-import static com.udacity.stockhawk.ui.StockDetailFragment.FRAGMENT_DETAIL_TAG;
-import static com.udacity.stockhawk.ui.StockDetailFragment.SYMBOL_PARAM;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
-public class StockDetailActivity extends AppCompatActivity {
+import static com.udacity.stockhawk.ui.DetailFragment.FRAGMENT_DETAIL_TAG;
+import static com.udacity.stockhawk.ui.DetailFragment.SYMBOL_PARAM;
+
+public class DetailActivity extends AppCompatActivity {
+
+    @BindView(R.id.toolbar) public Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_stock_detail);
+        setContentView(R.layout.activity_detail);
+        ButterKnife.bind(this);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         if (savedInstanceState == null) {
@@ -22,7 +31,7 @@ public class StockDetailActivity extends AppCompatActivity {
             arguments.putParcelable(SYMBOL_PARAM,
                     getIntent().getData());
 
-            StockDetailFragment fragment = new StockDetailFragment();
+            DetailFragment fragment = new DetailFragment();
             fragment.setArguments(arguments);
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.fragment, fragment, FRAGMENT_DETAIL_TAG)

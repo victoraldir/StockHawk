@@ -34,7 +34,6 @@ android {
         }
     }
 
-    //noinspection GroovyMissingReturnStatement
     lintOptions {
         warning 'InvalidPackage'
     }
@@ -52,9 +51,12 @@ check {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:25.1.0'
-    compile 'com.android.support:recyclerview-v7:25.1.0'
-    compile 'com.android.support:design:25.1.0'
+
+    compile 'com.android.support:appcompat-v7:25.0.1'
+    compile 'com.android.support:recyclerview-v7:25.0.1'
+    compile 'com.android.support:design:25.0.1'
+    compile 'com.android.support:gridlayout-v7:25.0.1'
+    compile 'com.android.support:support-annotations:25.0.1'
     compile 'com.jakewharton:butterknife:8.4.0'
     apt 'com.jakewharton:butterknife-compiler:8.4.0'
     compile 'com.google.guava:guava:20.0'
@@ -63,4 +65,5 @@ dependencies {
     compile 'net.sf.opencsv:opencsv:2.3'
     compile 'com.github.PhilJay:MPAndroidChart:v3.0.1'
     compile 'com.facebook.stetho:stetho:1.4.2'
+    compile 'joda-time:joda-time:2.9.7'
 }

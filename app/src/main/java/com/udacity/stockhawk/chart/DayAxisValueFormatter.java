@@ -12,16 +12,18 @@ import java.text.SimpleDateFormat;
 
 public class DayAxisValueFormatter implements IAxisValueFormatter {
 
-    SimpleDateFormat dt;
+    private SimpleDateFormat dt;
+    private Float referenceTime;
 
-    public DayAxisValueFormatter(){
-        dt = new SimpleDateFormat("yyyyy-mm-dd");
+    public DayAxisValueFormatter(Float referenceTime){
+        dt = new SimpleDateFormat("MMM yyyy");
+        this.referenceTime = referenceTime;
     }
 
     @Override
     public String getFormattedValue(float value, AxisBase axis) {
 
-        java.sql.Timestamp timestamp = new java.sql.Timestamp((long)value);
+        java.sql.Timestamp timestamp = new java.sql.Timestamp((long) (value + referenceTime));
 
         return dt.format(timestamp);
     }

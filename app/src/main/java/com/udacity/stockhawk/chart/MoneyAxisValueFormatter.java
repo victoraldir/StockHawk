@@ -14,11 +14,12 @@ public class MoneyAxisValueFormatter implements IAxisValueFormatter {
     private DecimalFormat mFormat;
 
     public MoneyAxisValueFormatter() {
-        mFormat = new DecimalFormat("###,###,##0.0"); // use one decimal
+        mFormat = new DecimalFormat(); // use one decimal
+        mFormat.setMaximumFractionDigits(2);
     }
 
     @Override
     public String getFormattedValue(float value, AxisBase axis) {
-        return mFormat.format(value);
+        return "$" + mFormat.format(value);
     }
 }
