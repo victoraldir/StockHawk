@@ -9,6 +9,8 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.util.Pair;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,6 +62,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
 
     private static final String[] DETAIL_COLUMNS = {
             Contract.Quote.COLUMN_HISTORY,
+            Contract.Quote.COLUMN_NAME,
             Contract.Quote.COLUMN_SYMBOL,
             Contract.Quote.COLUMN_PRICE,
             Contract.Quote.COLUMN_ABSOLUTE_CHANGE,
@@ -68,10 +71,11 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
     };
 
     public static final int COL_HISTORY = 0;
-    public static final int COL_SYMBOL = 1;
-    public static final int COL_PRICE = 2;
-    public static final int COL_ABSOLUTE_CHANGE = 3;
-    public static final int COL_PERCENTAGE_CHANGE = 4;
+    public static final int COL_NAME = 1;
+    public static final int COL_SYMBOL = 2;
+    public static final int COL_PRICE = 3;
+    public static final int COL_ABSOLUTE_CHANGE = 4;
+    public static final int COL_PERCENTAGE_CHANGE = 5;
 
 
     public DetailFragment() {
@@ -111,18 +115,11 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
         if (data != null && data.moveToFirst()) {
 
             setUpLineChart(data.getString(COL_HISTORY));
-            //symbol.setText(data.getString(COL_SYMBOL));
-            //stockPrice.setText(pricePercentFormatter.getDollarFormat(data.getFloat(COL_PRICE)));
-
             float absoluteChange = data.getFloat(COL_ABSOLUTE_CHANGE);
 
-//            priceChange.setText(pricePercentFormatter.getDollarFormatWithPlus(absoluteChange) + " (" + pricePercentFormatter.getPercentageFormat(data.getFloat(COL_PERCENTAGE_CHANGE)) + ")");
-//
-//            if(absoluteChange >= 0) {
-//                priceChange.setTextColor(getResources().getColor(R.color.material_green_700));
-//            }else{
-//                priceChange.setTextColor(getResources().getColor(R.color.material_red_700));
-//            }
+            ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+            actionBar.setTitle(data.getString(COL_SYMBOL));
+            actionBar.setSubtitle(data.getString(COL_NAME));
 
         }
     }
