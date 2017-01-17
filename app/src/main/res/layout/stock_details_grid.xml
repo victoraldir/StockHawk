@@ -6,85 +6,54 @@
     android:layout_height="match_parent"
     android:paddingEnd="@dimen/activity_vertical_margin"
     android:paddingStart="@dimen/activity_vertical_margin"
-    app:columnCount="3">
+    app:columnCount="2">
 
-    <TextView
-        android:id="@+id/stock_name"
-        style="@style/Base.TextAppearance.AppCompat.Headline"
-        android:ellipsize="end"
-        android:maxLength="21"
-        android:textColor="@color/white"
-        app:layout_columnSpan="2"
+    <TextClock
+        android:id="@+id/timezone"
         app:layout_columnWeight="1"
-        tools:text="Microsoft Corporation"
-        />
+        app:layout_columnSpan="2"
+        app:layout_gravity="right"
+        android:gravity="start"
+        android:textSize="15sp"/>
 
     <TextView
         android:id="@+id/day_highest"
-        style="@style/Base.TextAppearance.AppCompat.Headline"
-        android:textColor="@color/white"
-        android:textStyle="normal"
         app:layout_columnWeight="1"
-        app:layout_gravity="right"
+        app:layout_gravity="fill_horizontal"
+        android:gravity="start"
         tools:text="$180"
-        />
+        android:textSize="45sp" />
+
+    <LinearLayout
+        app:layout_columnSpan="1"
+        android:layout_width="150dp"
+        app:layout_columnWeight="1"
+        app:layout_gravity="fill_horizontal|center_vertical"
+        android:gravity="right">
+
+        <TextView
+            android:id="@+id/price"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10sp"
+            tools:text="1000.00" />
+
+        <TextView
+            android:id="@+id/change"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/percent_change_pill_green"
+            android:paddingStart="3dp"
+            android:paddingEnd="3dp"
+            tools:text="100%" />
+    </LinearLayout>
 
     <android.support.v4.widget.Space
-        android:layout_height="0dp"
-        android:layout_marginBottom="@dimen/base_padding"
-        app:layout_columnSpan="3"
-        app:layout_columnWeight="1"/>
-
-    <TextView
-        android:id="@+id/stock_exchange"
-        style="@style/Base.TextAppearance.AppCompat.Subhead"
-        android:textColor="@color/white"
-        android:textStyle="normal"
+        android:layout_height="@dimen/detail_view_padding_vertical"
         app:layout_columnSpan="2"
         app:layout_columnWeight="1"
-        tools:text="NASDAQ"
-        />
+        app:layout_rowWeight="1" />
 
-    <TextView
-        android:id="@+id/day_lowest"
-        style="@style/Base.TextAppearance.AppCompat.Subhead"
-        android:gravity="center_horizontal"
-        android:textColor="@color/white"
-        android:textStyle="normal"
-        app:layout_columnWeight="1"
-        app:layout_gravity="right"
-        tools:text="$94"/>
-
-    <android.support.v4.widget.Space
-        android:layout_height="0dp"
-        android:layout_marginBottom="@dimen/base_padding"
-        app:layout_columnSpan="3"
-        app:layout_columnWeight="1"/>
-
-    <TextView
-        android:id="@+id/stock_price"
-        style="@style/Base.TextAppearance.AppCompat.Title"
-        android:paddingEnd="8dp"
-        android:paddingStart="0dp"
-        android:textColor="@color/white"
-        android:textStyle="normal"
-        android:transitionName="@string/stock_price_transition_name"
-        tools:text="$914.15"/>
-
-    <TextView
-        android:id="@+id/absolute_change"
-        style="@style/Base.TextAppearance.AppCompat.Body2"
-        android:layout_marginBottom="@dimen/base_padding"
-        android:layout_marginTop="-3dp"
-        android:elevation="4dp"
-        android:fontFamily="sans-serif-light"
-        android:padding="3dp"
-        android:textColor="@color/white"
-        android:transitionName="@string/stock_change_transition_name"
-        tools:text="+ $0.14"/>
-
-    <TextView
-        android:layout_width="0dp"
-        android:text=""
-        />
 </android.support.v7.widget.GridLayout>

@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
@@ -29,6 +30,7 @@ import com.udacity.stockhawk.chart.DayAxisValueFormatter;
 import com.udacity.stockhawk.chart.MoneyAxisValueFormatter;
 import com.udacity.stockhawk.chart.XYMarkerView;
 import com.udacity.stockhawk.data.Contract;
+import com.udacity.stockhawk.sync.QuoteSyncJob;
 import com.udacity.stockhawk.utils.HistoryFormatter;
 import com.udacity.stockhawk.utils.PricePercentFormatter;
 
@@ -48,17 +50,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
     private final int STOCK_DETAIL_LOADER = 0;
     private PricePercentFormatter pricePercentFormatter;
 
-    @BindView(R.id.detail_bar_chart)
-    LineChart mChart;
-
-//    @BindView(R.id.symbol)
-//    TextView symbol;
-
-//    @BindView(R.id.stock_price)
-//    TextView stockPrice;
-
-//    @BindView(R.id.price_change)
-//    TextView priceChange;
+    @BindView(R.id.detail_bar_chart) LineChart mChart;
 
     private static final String[] DETAIL_COLUMNS = {
             Contract.Quote.COLUMN_HISTORY,
@@ -66,8 +58,9 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
             Contract.Quote.COLUMN_SYMBOL,
             Contract.Quote.COLUMN_PRICE,
             Contract.Quote.COLUMN_ABSOLUTE_CHANGE,
-            Contract.Quote.COLUMN_PERCENTAGE_CHANGE
-
+            Contract.Quote.COLUMN_PERCENTAGE_CHANGE,
+            Contract.Quote.COLUMN_TIME_ZONE,
+            Contract.Quote.COLUMN_LAST_CHECK,
     };
 
     public static final int COL_HISTORY = 0;
@@ -76,7 +69,8 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
     public static final int COL_PRICE = 3;
     public static final int COL_ABSOLUTE_CHANGE = 4;
     public static final int COL_PERCENTAGE_CHANGE = 5;
-
+    public static final int COL_TIME_ZONE = 6;
+    public static final int COL_LAST_CHECK = 7;
 
     public DetailFragment() {
     }
@@ -117,9 +111,24 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
             setUpLineChart(data.getString(COL_HISTORY));
             float absoluteChange = data.getFloat(COL_ABSOLUTE_CHANGE);
 
+            DetailActivity activityDetail = ((DetailActivity) getActivity());
+
             ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
             actionBar.setTitle(data.getString(COL_SYMBOL));
             actionBar.setSubtitle(data.getString(COL_NAME));
+
+            activityDetail.timeZone.setTimeZone(data.getString(COL_TIME_ZONE));
+            activityDetail.timeZone.setFormat12Hour("K:mm a, zzzz");
+
+            activityDetail.stockPrice.setText(pricePercentFormatter.getDollarFormat(data.getFloat(COL_PRICE)));
+            activityDetail.stockChange.setText(pricePercentFormatter.getPercentageFormat(absoluteChange));
+            activityDetail.dayHighest.setText(pricePercentFormatter.getDollarFormat(data.getFloat(COL_PRICE)));
+
+            if (absoluteChange >= 0) {
+                activityDetail.stockChange.setBackgroundResource(R.drawable.percent_change_pill_green);
+            } else {
+                activityDetail.stockChange.setBackgroundResource(R.drawable.percent_change_pill_red);
+            }
 
         }
     }
@@ -136,6 +145,13 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
         LineData lineData = new LineData(dataSet);
         mChart.setData(lineData);
 
+        Description description = new Description();
+        description.setText(getString(R.string.graph_description, QuoteSyncJob.YEARS_OF_HISTORY));
+        description.setTextColor(getResources().getColor(R.color.white));
+
+        mChart.setDescription(description);
+
+
         DayAxisValueFormatter xAxisFormatter = new DayAxisValueFormatter(referenceTime);
 
         XAxis xAxis = mChart.getXAxis();
@@ -143,7 +159,9 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
         xAxis.setDrawGridLines(false);
         xAxis.setAxisLineWidth(1.5f);
         xAxis.setTextSize(12f);
+        xAxis.setLabelCount(4);
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setTextColor(getResources().getColor(R.color.white));
 
         YAxis yAxisRight = mChart.getAxisRight();
         yAxisRight.setEnabled(false);
@@ -153,6 +171,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
         yAxis.setDrawGridLines(false);
         yAxis.setAxisLineWidth(1.5f);
         yAxis.setTextSize(12f);
+        yAxis.setTextColor(getResources().getColor(R.color.white));
 
         XYMarkerView mv = new XYMarkerView(getActivity(), xAxisFormatter);
 

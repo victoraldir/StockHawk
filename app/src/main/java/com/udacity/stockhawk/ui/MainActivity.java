@@ -43,7 +43,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     SwipeRefreshLayout swipeRefreshLayout;
     @SuppressWarnings("WeakerAccess")
     @BindView(R.id.error)
-
     TextView error;
     @BindView(R.id.toolbar) public Toolbar toolbar;
 
@@ -66,7 +65,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         setSupportActionBar(toolbar);
 
-        adapter = new StockAdapter(this, this);
+        adapter = new StockAdapter(this, this, error);
         stockRecyclerView.setAdapter(adapter);
         stockRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -88,6 +87,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 String symbol = adapter.getSymbolAtPosition(viewHolder.getAdapterPosition());
                 PrefUtils.removeStock(MainActivity.this, symbol);
                 getContentResolver().delete(Contract.Quote.makeUriForStock(symbol), null, null);
+                updateEmptyView();
             }
         }).attachToRecyclerView(stockRecyclerView);
 
@@ -106,20 +106,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         QuoteSyncJob.syncImmediately(this);
 
-        if (!networkUp() && adapter.getItemCount() == 0) {
-            swipeRefreshLayout.setRefreshing(false);
-            error.setText(getString(R.string.error_no_network));
-            error.setVisibility(View.VISIBLE);
-        } else if (!networkUp()) {
-            swipeRefreshLayout.setRefreshing(false);
-            Toast.makeText(this, R.string.toast_no_connectivity, Toast.LENGTH_LONG).show();
-        } else if (PrefUtils.getStocks(this).size() == 0) {
-            swipeRefreshLayout.setRefreshing(false);
-            error.setText(getString(R.string.error_no_stocks));
-            error.setVisibility(View.VISIBLE);
-        } else {
-            error.setVisibility(View.GONE);
-        }
+        updateEmptyView();
     }
 
     public void button(@SuppressWarnings("UnusedParameters") View view) {
@@ -153,12 +140,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         swipeRefreshLayout.setRefreshing(false);
 
-        if (data.getCount() != 0) {
-            error.setVisibility(View.GONE);
-        }
         adapter.setCursor(data);
     }
-
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
@@ -182,6 +165,27 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         MenuItem item = menu.findItem(R.id.action_change_units);
         setDisplayModeMenuItemIcon(item);
         return true;
+    }
+
+    /*
+        Updates the empty list view with contextually relevant information that the user can
+        use to determine why they aren't seeing weather.
+     */
+    private void updateEmptyView() {
+        if (!networkUp() && adapter.getItemCount() == 0) {
+            swipeRefreshLayout.setRefreshing(false);
+            error.setText(getString(R.string.error_no_network));
+            error.setVisibility(View.VISIBLE);
+        } else if (!networkUp()) {
+            swipeRefreshLayout.setRefreshing(false);
+            Toast.makeText(this, R.string.toast_no_connectivity, Toast.LENGTH_LONG).show();
+        } else if (PrefUtils.getStocks(this).size() == 0) {
+            swipeRefreshLayout.setRefreshing(false);
+            error.setText(getString(R.string.error_no_stocks));
+            error.setVisibility(View.VISIBLE);
+        } else {
+            error.setVisibility(View.GONE);
+        }
     }
 
     @Override

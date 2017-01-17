@@ -23,17 +23,19 @@ class StockAdapter extends RecyclerView.Adapter<StockAdapter.StockViewHolder> {
     private Cursor cursor;
     private StockAdapterOnClickHandler clickHandler;
     private PricePercentFormatter pricePercentFormatter;
+    final private View mEmptyView;
 
-    StockAdapter(Context context, StockAdapterOnClickHandler clickHandler) {
+    StockAdapter(Context context, StockAdapterOnClickHandler clickHandler, View mEmptyView) {
         this.context = context;
         this.clickHandler = clickHandler;
-
+        this.mEmptyView = mEmptyView;
         pricePercentFormatter = new PricePercentFormatter();
     }
 
     void setCursor(Cursor cursor) {
         this.cursor = cursor;
         notifyDataSetChanged();
+        mEmptyView.setVisibility(getItemCount() == 0 ? View.VISIBLE : View.GONE);
     }
 
     String getSymbolAtPosition(int position) {
@@ -56,6 +58,7 @@ class StockAdapter extends RecyclerView.Adapter<StockAdapter.StockViewHolder> {
         cursor.moveToPosition(position);
 
 
+        holder.name.setText(cursor.getString(Contract.Quote.POSITION_NAME));
         holder.symbol.setText(cursor.getString(Contract.Quote.POSITION_SYMBOL));
         holder.price.setText(pricePercentFormatter.getDollarFormat(cursor.getFloat(Contract.Quote.POSITION_PRICE)));
 
@@ -97,6 +100,9 @@ class StockAdapter extends RecyclerView.Adapter<StockAdapter.StockViewHolder> {
     }
 
     class StockViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
+        @BindView(R.id.main_text_stock_name)
+        TextView name;
 
         @BindView(R.id.symbol)
         TextView symbol;

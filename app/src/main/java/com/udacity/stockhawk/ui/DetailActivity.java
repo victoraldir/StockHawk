@@ -3,7 +3,11 @@ package com.udacity.stockhawk.ui;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.widget.TextClock;
+import android.widget.TextView;
+
 import com.udacity.stockhawk.R;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -13,6 +17,14 @@ import static com.udacity.stockhawk.ui.DetailFragment.SYMBOL_PARAM;
 public class DetailActivity extends AppCompatActivity {
 
     @BindView(R.id.toolbar) public Toolbar toolbar;
+
+    @BindView(R.id.change)
+    TextView stockChange;
+    @BindView(R.id.price)
+    TextView stockPrice;
+    @BindView(R.id.timezone)
+    TextClock timeZone;
+    @BindView(R.id.day_highest) TextView dayHighest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

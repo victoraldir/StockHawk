@@ -26,7 +26,7 @@
     <string name="dialog_cancel">Cancel</string>
     <string name="dialog_add">Add</string>
 
-    <string name="error_no_network">No network connectivity! Will load stock cursor when the network is available.</string>
+    <string name="error_no_network">No network connectivity! Will load when the network is available.</string>
     <string name="error_no_stocks">No stocks added! Hit the floating action button to add one.</string>
     <string name="error_no_stocks_available">Stock quote %s does not exist!</string>
 
@@ -42,5 +42,16 @@
     <!--Shared element transitions-->
     <string name="stock_price_transition_name" translatable="false">TN_STOCK_PRICE</string>
     <string name="stock_change_transition_name" translatable="false">TN_STOCK_CHANGE</string>
+    <string name="bid_title">Bid</string>
+    <string name="low_day_title">Low Day</string>
+    <string name="high_day_title">High Day</string>
+    <string name="ask_title">Ask</string>
+
+    <string name="empty_stock_list"> No data available.</string>
+    <string name="widget_cd">Stock hawk widget</string>
+
+    <string name="graph_description">%d year of story!</string>
+
+    <string name="widget_title">Today\u0027s Market</string>
 
 </resources>
