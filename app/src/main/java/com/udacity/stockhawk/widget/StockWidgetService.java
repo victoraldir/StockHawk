@@ -11,16 +11,14 @@ import android.widget.RemoteViewsService;
 
 import com.udacity.stockhawk.R;
 import com.udacity.stockhawk.data.Contract;
-
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.util.Locale;
+import com.udacity.stockhawk.utils.PricePercentFormatter;
 
 /**
  * Created by victoraldir on 12/01/2017.
  */
 
 public class StockWidgetService extends RemoteViewsService {
+
     @Override
     public RemoteViewsFactory onGetViewFactory(Intent intent) {
         return new ListRemoteViewFactory();
@@ -29,10 +27,11 @@ public class StockWidgetService extends RemoteViewsService {
     public class ListRemoteViewFactory implements RemoteViewsFactory {
 
         private Cursor data = null;
+        PricePercentFormatter pricePercentFormatter;
 
         @Override
         public void onCreate() {
-
+            pricePercentFormatter = new PricePercentFormatter();
         }
 
         @Override
@@ -74,17 +73,9 @@ public class StockWidgetService extends RemoteViewsService {
                     R.layout.list_item_quote);
 
             String stockSymbol = data.getString(Contract.Quote.POSITION_SYMBOL);
-            String stockPrice = data.getString(Contract.Quote.POSITION_PRICE);
+            float stockPrice = data.getFloat(Contract.Quote.POSITION_PRICE);
             Float absoluteChange = data.getFloat(Contract.Quote.POSITION_ABSOLUTE_CHANGE);
             int backgroundDrawable;
-
-            DecimalFormat dollarFormat = (DecimalFormat) NumberFormat.getCurrencyInstance(Locale.US);
-            DecimalFormat dollarFormatWithPlus = (DecimalFormat) NumberFormat.getCurrencyInstance(Locale.US);
-            dollarFormatWithPlus.setPositivePrefix("+");
-            dollarFormatWithPlus.setMaximumFractionDigits(2);
-            dollarFormat.setMaximumFractionDigits(2);
-            dollarFormat.setMinimumFractionDigits(2);
-            dollarFormatWithPlus.setMinimumFractionDigits(2);
 
             if (absoluteChange >= 0) {
                 backgroundDrawable = R.drawable.percent_change_pill_green;
@@ -94,8 +85,8 @@ public class StockWidgetService extends RemoteViewsService {
 
             remoteViews.setTextViewText(R.id.symbol, stockSymbol);
             remoteViews.setTextViewText(R.id.main_text_stock_name, data.getString(Contract.Quote.POSITION_NAME));
-            remoteViews.setTextViewText(R.id.price, stockPrice);
-            remoteViews.setTextViewText(R.id.change, dollarFormatWithPlus.format(absoluteChange));
+            remoteViews.setTextViewText(R.id.price, pricePercentFormatter.getDollarFormat(stockPrice));
+            remoteViews.setTextViewText(R.id.change, pricePercentFormatter.getPercentageFormat(absoluteChange));
             remoteViews.setInt(R.id.change, "setBackgroundResource", backgroundDrawable);
             remoteViews.setContentDescription(R.string.widget_cd,"");
             //remoteViews.setInt(R.id.list_item_quote, "setBackgroundResource", R.color.white);
