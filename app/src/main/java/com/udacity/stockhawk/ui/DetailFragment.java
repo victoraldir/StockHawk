@@ -51,6 +51,9 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
     private PricePercentFormatter pricePercentFormatter;
 
     @BindView(R.id.detail_bar_chart) LineChart mChart;
+//    @BindView(R.id.timezone) TextClock timeZone;
+//    @BindView(R.id.price) TextView stockPrice;
+//    @BindView(R.id.change) TextView stockChange;
 
     private static final String[] DETAIL_COLUMNS = {
             Contract.Quote.COLUMN_HISTORY,
@@ -111,23 +114,24 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
             setUpLineChart(data.getString(COL_HISTORY));
             float absoluteChange = data.getFloat(COL_ABSOLUTE_CHANGE);
 
-            DetailActivity activityDetail = ((DetailActivity) getActivity());
-
             ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
             actionBar.setTitle(data.getString(COL_SYMBOL));
             actionBar.setSubtitle(data.getString(COL_NAME));
 
-            activityDetail.timeZone.setTimeZone(data.getString(COL_TIME_ZONE));
-            activityDetail.timeZone.setFormat12Hour("K:mm a, zzzz");
+            DetailActivity detailActivity = (DetailActivity) getActivity();
 
-            activityDetail.stockPrice.setText(pricePercentFormatter.getDollarFormat(data.getFloat(COL_PRICE)));
-            activityDetail.stockChange.setText(pricePercentFormatter.getPercentageFormat(absoluteChange));
-            activityDetail.dayHighest.setText(pricePercentFormatter.getDollarFormat(data.getFloat(COL_PRICE)));
+            detailActivity.timeZone.setTimeZone(data.getString(COL_TIME_ZONE));
+            detailActivity.timeZone.setFormat12Hour("K:mm a, zzzz");
+
+            detailActivity.stockPrice.setText(pricePercentFormatter.getDollarFormat(data.getFloat(COL_PRICE)));
+            detailActivity.stockChange.setText(pricePercentFormatter.getPercentageFormat(absoluteChange));
+
+            mChart.setContentDescription(getString(R.string.cd_graph, data.getString(COL_NAME)));
 
             if (absoluteChange >= 0) {
-                activityDetail.stockChange.setBackgroundResource(R.drawable.percent_change_pill_green);
+                detailActivity.stockChange.setBackgroundResource(R.drawable.percent_change_pill_green);
             } else {
-                activityDetail.stockChange.setBackgroundResource(R.drawable.percent_change_pill_red);
+                detailActivity.stockChange.setBackgroundResource(R.drawable.percent_change_pill_red);
             }
 
         }

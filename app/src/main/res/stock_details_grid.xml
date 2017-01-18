@@ -25,7 +25,7 @@
         android:textColor="@color/white"
         android:textStyle="normal"
         app:layout_columnWeight="1"
-        app:layout_gravity="right"
+        app:layout_gravity="end"
         tools:text="$180"
         />
 
@@ -52,7 +52,7 @@
         android:textColor="@color/white"
         android:textStyle="normal"
         app:layout_columnWeight="1"
-        app:layout_gravity="right"
+        app:layout_gravity="end"
         tools:text="$94"/>
 
     <android.support.v4.widget.Space

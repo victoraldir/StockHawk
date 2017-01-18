@@ -17,14 +17,9 @@ import static com.udacity.stockhawk.ui.DetailFragment.SYMBOL_PARAM;
 public class DetailActivity extends AppCompatActivity {
 
     @BindView(R.id.toolbar) public Toolbar toolbar;
-
-    @BindView(R.id.change)
-    TextView stockChange;
-    @BindView(R.id.price)
-    TextView stockPrice;
-    @BindView(R.id.timezone)
-    TextClock timeZone;
-    @BindView(R.id.day_highest) TextView dayHighest;
+    @BindView(R.id.change) TextView stockChange;
+    @BindView(R.id.timezone) TextClock timeZone;
+    @BindView(R.id.stockPrice) TextView stockPrice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +28,7 @@ public class DetailActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeActionContentDescription(R.string.cd_up_navigator_button);
 
         if (savedInstanceState == null) {
 

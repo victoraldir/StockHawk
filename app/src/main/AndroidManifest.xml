@@ -60,7 +60,7 @@
                 <action android:name="com.udacity.stockhawk.ACTION_DATA_UPDATED" />
             </intent-filter>
             <meta-data android:name="android.appwidget.provider"
-                android:resource="@xml/appwidget_provider_info" />
+                    android:resource="@xml/appwidget_provider_info" />
         </receiver>
 
     </application>
