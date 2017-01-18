@@ -6,6 +6,14 @@ android:
     # use the latest revision of Android SDK Tools
     # - platform-tools
     # - tools
+    - tools
+        - platform-tools
+        - build-tools-24.0.3
+        - android-24
+        - extra-android-m2repository
+        - extra-google-m2repository
+        - extra-android-support
+        - extra-google-google_play_services
 
     # The BuildTools version used by your project
     - build-tools-25.0.2
@@ -14,7 +22,7 @@ android:
     - android-25
 
     # Additional components
-    - extra-google-m2repository
+
 
     # Specify at least one system image,
     # if you need to run emulator(s) during your tests
