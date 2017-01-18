@@ -53,14 +53,18 @@
 
     <string name="widget_title">Today\u0027s Market</string>
 
+    <string name="marker_view_date">Date: %1$s, Value: $%2$s</string>
+
     <string name="cd_stock_price">Stock price: %s</string>
     <string name="cd_stock_change">Stock change: %s</string>
+    <string name="cd_timezone">Timezone: %s</string>
 
     <string name="cd_graph">Historical graph of the stock %s over 2 years</string>
 
     <string name="cd_menu">Toggle between absolute value and percentage of the stock change</string>
 
     <string name="cd_up_navigator_button">Back to stock main screen</string>
+    <string name="cd_details_activity">Stock details</string>
 
 
 </resources>

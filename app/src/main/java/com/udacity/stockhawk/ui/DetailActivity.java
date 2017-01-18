@@ -29,6 +29,7 @@ public class DetailActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeActionContentDescription(R.string.cd_up_navigator_button);
+        setTitle(R.string.cd_details_activity);
 
         if (savedInstanceState == null) {
 

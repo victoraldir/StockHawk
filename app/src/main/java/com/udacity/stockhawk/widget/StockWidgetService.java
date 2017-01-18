@@ -86,10 +86,12 @@ public class StockWidgetService extends RemoteViewsService {
             remoteViews.setTextViewText(R.id.symbol, stockSymbol);
             remoteViews.setTextViewText(R.id.main_text_stock_name, data.getString(Contract.Quote.POSITION_NAME));
             remoteViews.setTextViewText(R.id.price, pricePercentFormatter.getDollarFormat(stockPrice));
+            remoteViews.setContentDescription(R.id.price,getString(R.string.cd_stock_price,pricePercentFormatter.getDollarFormat(stockPrice)));
             remoteViews.setTextViewText(R.id.change, pricePercentFormatter.getPercentageFormat(absoluteChange));
+            remoteViews.setContentDescription(R.id.change,getString(R.string.cd_stock_change,pricePercentFormatter.getPercentageFormat(absoluteChange)));
             remoteViews.setInt(R.id.change, "setBackgroundResource", backgroundDrawable);
             remoteViews.setContentDescription(R.string.widget_cd,"");
-            //remoteViews.setInt(R.id.list_item_quote, "setBackgroundResource", R.color.white);
+
 
             final Intent fillInIntent = new Intent();
             Uri stockUri = Contract.Quote.makeUriForStock(stockSymbol);

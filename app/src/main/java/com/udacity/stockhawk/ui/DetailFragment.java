@@ -122,9 +122,12 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
 
             detailActivity.timeZone.setTimeZone(data.getString(COL_TIME_ZONE));
             detailActivity.timeZone.setFormat12Hour("K:mm a, zzzz");
+            detailActivity.timeZone.setContentDescription(getString(R.string.cd_timezone,data.getString(COL_TIME_ZONE)));
 
             detailActivity.stockPrice.setText(pricePercentFormatter.getDollarFormat(data.getFloat(COL_PRICE)));
+            detailActivity.stockPrice.setContentDescription(getString(R.string.cd_stock_price,pricePercentFormatter.getDollarFormat(data.getFloat(COL_PRICE))));
             detailActivity.stockChange.setText(pricePercentFormatter.getPercentageFormat(absoluteChange));
+            detailActivity.stockChange.setContentDescription(getString(R.string.cd_stock_change,pricePercentFormatter.getDollarFormat(absoluteChange)));
 
             mChart.setContentDescription(getString(R.string.cd_graph, data.getString(COL_NAME)));
 
